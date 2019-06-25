@@ -83,16 +83,18 @@ let styles = StyleSheet.create({
     height: Theme.size.headerHeight,
     paddingTop: Theme.size.statusBarHeight,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     backgroundColor: '#171a23'
   },
   titleStyle: {
     alignItems: 'center',
+    paddingTop: 10,
     justifyContent: 'center',
     flexDirection: 'row',
     flex: 1
   },
   titleTextStyle: {
-    fontSize: 18
+    fontSize: 22,
+    fontFamily: 'Sentinel-Book'
   }
 })

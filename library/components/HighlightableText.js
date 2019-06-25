@@ -13,17 +13,21 @@ export default class HighlightableText extends Component {
     matcher: PropTypes.object,
     text: PropTypes.string.isRequired,
     textColor: PropTypes.string,
+    fontFamily: PropTypes.string,
+    fontSize: PropTypes.number,
     hightlightTextColor: PropTypes.string
   }
 
   static defaultProps = {
+    fontFamily: 'Open Sans',
+    fontSize: 15,
     textColor: '#171a23',
     hightlightTextColor: '#dcb35f'
   }
 
 
   render () {
-    const {textColor, hightlightTextColor} = this.props
+    const {textColor, hightlightTextColor, fontSize, fontFamily} = this.props
     let startIndex = 0
     let titleContents = []
 
@@ -36,14 +40,16 @@ export default class HighlightableText extends Component {
         // 当前位置和匹配起始位置之间的文字
         let str = text.slice(startIndex, match.start)
         titleContents.push(<Text key={key + startIndex} style={{
-          fontSize: 15,
+          fontFamily: fontFamily,
+          fontSize: fontSize,
           color: textColor
         }}>{str}</Text>)
 
         // 被选中的文字
         let selStr = text.slice(match.start, endIndex)
         titleContents.push(<Text key={key + match.start} style={{
-          fontSize: 15,
+          fontFamily: fontFamily,
+          fontSize: fontSize,
           color: hightlightTextColor
         }}>{selStr}</Text>)
 
@@ -53,7 +59,8 @@ export default class HighlightableText extends Component {
         // 被选中的文字
         let selStr = text.slice(startIndex, endIndex)
         titleContents.push(<Text key={key + startIndex} style={{
-          fontSize: 15,
+          fontFamily: fontFamily,
+          fontSize: fontSize,
           color: hightlightTextColor
         }}>{selStr}</Text>)
 
@@ -64,7 +71,8 @@ export default class HighlightableText extends Component {
     if (startIndex < text.length) {
       let str = text.slice(startIndex, text.length)
       titleContents.push(<Text key={key + startIndex} style={{
-        fontSize: 15,
+        fontFamily: fontFamily,
+        fontSize: fontSize,
         color: textColor
       }} numberOfLines={1}>{str}</Text>)
     }

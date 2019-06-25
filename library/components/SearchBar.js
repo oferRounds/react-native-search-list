@@ -35,10 +35,12 @@ export default class SearchBar extends Component {
     searchInputPlaceholderColor: PropTypes.string, // default placeholder color for the search input
     searchInputTextColor: PropTypes.string, // default state text color for the search input
     searchInputTextColorActive: PropTypes.string, // active state text color for the search input
+    searchInputBorderColor: PropTypes.string,
 
     searchBarBackgroundColor: PropTypes.string, // active state background color for the search bar
 
-    isShowHolder: PropTypes.bool // 是否显示搜索图标
+    isShowHolder: PropTypes.bool, // 是否显示搜索图标
+    searchInputEnabled: PropTypes.bool
   }
 
   static defaultProps = {
@@ -46,8 +48,10 @@ export default class SearchBar extends Component {
     searchInputBackgroundColorActive: '#171a23',
 
     searchInputPlaceholderColor: '#979797',
+    searchInputBorderColor: 'red',
     searchInputTextColor: '#171a23',
     searchInputTextColorActive: '#FFF',
+    searchInputEnabled: true,
 
     searchBarBackgroundColor: '#171a23',
 
@@ -112,6 +116,7 @@ export default class SearchBar extends Component {
           {
             flexDirection: 'row',
             padding: searchBarHorizontalPadding,
+            paddingTop: 0,
             height: Theme.size.searchInputHeight,
             backgroundColor: this.props.searchBarBackgroundColor
           },
@@ -129,22 +134,25 @@ export default class SearchBar extends Component {
             inputRange: [0, buttonWidth],
             outputRange: [this.props.searchInputBackgroundColor, this.props.searchInputBackgroundColorActive]
           }),
-          height: 28,
-          borderRadius: 5
+          height: 46,
+          borderRadius: 4
         }}>
           <TextInput
+            editable = { this.props.searchInputEnabled}
             onFocus={this.onFocus.bind(this)}
             onBlur={this.onBlur.bind(this)}
             ref='input'
             style={[styles.searchTextInputStyle, {
-              color: this.props.searchInputTextColorActive && !this.state.isShowHolder
+              color: this.props.searchInputTextColorActive && ! this.state.isShowHolder
                 ? this.props.searchInputTextColorActive
                 : this.props.searchInputTextColor || '#979797'
-            }, this.props.searchTextInputStyle]}
+            }, this.props.searchTextInputStyle,
+              { borderColor: this.props.searchInputBorderColor }
+            ]}
             onChangeText={this.onChange.bind(this)}
             value={this.state.value}
             underlineColorAndroid='transparent'
-            returnKeyType='search' />
+          />
 
           <Animated.View
             pointerEvents='none'
@@ -172,10 +180,12 @@ export default class SearchBar extends Component {
             }]}>
             <Image
               style={styles.searchIconStyle}
-              source={require('../images/icon-search.png')} />
+              source={require('../../../../../images/search_icon.png')} />
             <Text style={{
               marginLeft: 5,
+              marginTop: 1,
               color: this.props.searchInputPlaceholderColor,
+              fontFamily: 'Gotham-Book',
               fontSize: 14,
               backgroundColor: 'rgba(0, 0, 0, 0)'
             }}>{this.props.placeholder}</Text>
@@ -191,6 +201,7 @@ export default class SearchBar extends Component {
               style={{
                 flex: 1,
                 height: Theme.size.searchInputHeight,
+                marginLeft: this.state.isShowHolder ? 15 : 0,
                 width: buttonWidth,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -200,7 +211,7 @@ export default class SearchBar extends Component {
               renderToHardwareTextureAndroid
             >
               <Text
-                style={{color: this.props.cancelTextColor}}
+                style={{color: this.props.cancelTextColor, fontFamily: 'Gotham-Book', fontSize: 14 }}
                 numberOfLines={1}>{this.props.cancelTitle}</Text>
             </View>
           </TouchableWithoutFeedback>
@@ -213,19 +224,20 @@ export default class SearchBar extends Component {
 const styles = StyleSheet.create({
   searchTextInputStyle: {
     flex: 1,
-    height: 28,
+    height: 46,
     padding: 0,
     paddingLeft: searchIconWidth,
     paddingRight: 8,
-    borderRadius: 5
+    borderRadius: 5,
+    borderWidth: 1
   },
   centerSearchIconStyle: {
     position: 'absolute',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    top: 0,
-    left: 0,
+    justifyContent: 'flex-start',
+    top: 2,
+    left: 12,
     right: 0,
     bottom: 0,
     alignSelf: 'stretch'
@@ -240,7 +252,7 @@ const styles = StyleSheet.create({
     width: searchIconWidth
   },
   searchIconStyle: {
-    width: 12,
-    height: 12
+    width: 18,
+    height: 18
   }
 })

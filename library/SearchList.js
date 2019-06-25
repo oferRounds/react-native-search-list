@@ -53,7 +53,9 @@ export default class SearchList extends Component {
     // active state text color for the search input
     searchInputTextColorActive: PropTypes.string,
     searchInputPlaceholderColor: PropTypes.string,
+    searchInputBorderColor: PropTypes.string,
     searchInputPlaceholder: PropTypes.string,
+    searchInputEnabled: PropTypes.bool,
 
     title: PropTypes.string,
     titleTextColor: PropTypes.string,
@@ -107,11 +109,11 @@ export default class SearchList extends Component {
     })
     this.state = {
       isSearching: false,
-      searchStr: '',
       animatedValue: new Animated.Value(0),
       dataSource: listDataSource
     }
 
+    this.searchStr = ''
     this.sectionIDs = []
     this.copiedSource = []
 
@@ -156,9 +158,8 @@ export default class SearchList extends Component {
   }
 
   search (input) {
-    this.setState({searchStr: input})
+    this.searchStr = input
     if (input) {
-      input = sTrim(input)
       const tempResult = SearchService.search(this.copiedSource, input.toLowerCase())
       if (tempResult.length === 0) {
         this.setState({
@@ -175,6 +176,7 @@ export default class SearchList extends Component {
         } = SearchService.sortResultList(tempResult, this.props.resultSortFunc)
         this.rowIds = rowIds
         this.setState({
+          isSearching: true,
           dataSource: this.state.dataSource.cloneWithRowsAndSections(
             searchResultWithSection,
             [''],
@@ -219,7 +221,7 @@ export default class SearchList extends Component {
    */
   _renderSectionIndexItem (sectionData, sectionID) {
     return (
-      <Text style={{textAlign: 'center', color: this.props.sectionIndexTextColor, fontSize: 14, height: 20}}>
+      <Text style={{textAlign: 'center', color: this.props.sectionIndexTextColor, fontSize: 12, height: 20, fontFamily: 'GothamMedium'}}>
         {sectionID}
       </Text>
     )
@@ -355,7 +357,7 @@ export default class SearchList extends Component {
         ref='view'
         style={[{
           // 考虑上动画以后页面要向上移动，这里必须拉长
-          height: Theme.size.windowHeight + Theme.size.toolbarHeight,
+          height: Theme.size.windowHeight,
           width: Theme.size.windowWidth,
           transform: [
             {
@@ -402,7 +404,9 @@ export default class SearchList extends Component {
             searchInputBackgroundColor={this.props.searchInputBackgroundColor}
             searchInputBackgroundColorActive={this.props.searchInputBackgroundColorActive}
             searchInputPlaceholderColor={this.props.searchInputPlaceholderColor}
+            searchInputBorderColor = { this.props.searchInputBorderColor }
             searchInputTextColor={this.props.searchInputTextColor}
+            searchInputEnabled = { this.props.searchInputEnabled }
             searchInputTextColorActive={this.props.searchInputTextColorActive}
             ref='searchBar' />
           {this._renderStickHeader()}
@@ -426,12 +430,12 @@ export default class SearchList extends Component {
    * @private
    */
   _renderSearchBody () {
-    const {isSearching, searchStr} = this.state
+    const {isSearching} = this.state
     const {renderEmptyResult, renderEmpty, data} = this.props
 
     const isEmptyResult = this.state.dataSource.getRowCount() === 0
     if (isSearching && isEmptyResult && renderEmptyResult) {
-      return renderEmptyResult(searchStr)
+      return renderEmptyResult(this.searchStr)
     } else {
       if (data && data.length > 0) {
         return (
@@ -478,8 +482,8 @@ export default class SearchList extends Component {
    * @private
    */
   _renderMask () {
-    const {isSearching, searchStr} = this.state
-    if (isSearching && !searchStr) {
+    const {isSearching} = this.state
+    if (isSearching && !this.searchStr) {
       return (
         <Touchable
           onPress={this.cancelSearch.bind(this)} underlayColor='rgba(0, 0, 0, 0.0)'
@@ -569,8 +573,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#efefef'
   },
   sectionTitle: {
-    color: '#979797',
-    fontSize: 14
+    color: '#535353',
+    fontFamily: 'GothamMedium',
+    fontSize: 16
   },
   separator2: {
     backgroundColor: 'rgba(0, 0, 0, 0.1)',

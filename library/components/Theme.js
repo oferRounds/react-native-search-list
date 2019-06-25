@@ -10,7 +10,7 @@ import {
 const statusBarHeight = Platform.select({
   android: StatusBar.currentHeight,
   // TODO 这里不要写死值
-  ios: Platform.OS === 'ios' && parseInt((Dimensions.get('window').height / Dimensions.get('window').width) * 100) === 216 ? 44 : 20
+  ios: Platform.OS === 'ios' && Dimensions.get('window').height === 812 ? 44 : 20
 })
 export default {
   color: {
@@ -24,12 +24,12 @@ export default {
     maskColor: 'rgba(0, 0, 0, 0.1)'
   },
   size: {
-    sectionHeaderHeight: 24,
+    sectionHeaderHeight: 28,
     rowHeight: 40,
 
     toolbarHeight: 44,
-    headerHeight: 44 + statusBarHeight,
-    searchInputHeight: 44,
+    headerHeight: 50 + statusBarHeight,
+    searchInputHeight: 65,
 
     windowWidth: Dimensions.get('window').width,
     windowHeight: Dimensions.get('window').height,
@@ -38,9 +38,9 @@ export default {
 
     searchIconWidth: 30,
     cancelButtonWidth: 70, // width for the cancel button area, should be a fix value at this moment
-    searchBarHorizontalPadding: 8 // padding between the search input and the search bar
+    searchBarHorizontalPadding: 20 // padding between the search input and the search bar
   },
   duration: {
-    toggleSearchBar: 300
+    toggleSearchBar: 180
   }
 }
