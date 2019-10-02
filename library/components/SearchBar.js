@@ -4,7 +4,6 @@
 
 import {
   View,
-  Text,
   Image,
   TextInput,
   TouchableWithoutFeedback,
@@ -15,6 +14,8 @@ import React, { Component } from 'react'
 
 import PropTypes from 'prop-types'
 import Theme from './Theme'
+import UText from './UText'
+
 
 const {cancelButtonWidth: buttonWidth, searchBarHorizontalPadding, searchIconWidth} = Theme.size
 
@@ -141,6 +142,7 @@ export default class SearchBar extends Component {
             editable = { this.props.searchInputEnabled}
             onFocus={this.onFocus.bind(this)}
             onBlur={this.onBlur.bind(this)}
+            allowFontScaling={false}
             ref='input'
             style={[styles.searchTextInputStyle, {
               color: this.props.searchInputTextColorActive && ! this.state.isShowHolder
@@ -181,14 +183,14 @@ export default class SearchBar extends Component {
             <Image
               style={styles.searchIconStyle}
               source={require('../../../../../images/search_icon.png')} />
-            <Text style={{
+            <UText style={{
               marginLeft: 5,
               marginTop: 1,
               color: this.props.searchInputPlaceholderColor,
               fontFamily: 'Gotham-Book',
               fontSize: 14,
               backgroundColor: 'rgba(0, 0, 0, 0)'
-            }}>{this.props.placeholder}</Text>
+            }}>{this.props.placeholder}</UText>
           </Animated.View>
         </Animated.View>
         <View style={{
@@ -210,9 +212,10 @@ export default class SearchBar extends Component {
               shouldRasterizeIOS
               renderToHardwareTextureAndroid
             >
-              <Text
+              <UText
+                allowFontScaling={false}
                 style={{color: this.props.cancelTextColor, fontFamily: 'Gotham-Book', fontSize: 14 }}
-                numberOfLines={1}>{this.props.cancelTitle}</Text>
+                numberOfLines={1}>{this.props.cancelTitle}</UText>
             </View>
           </TouchableWithoutFeedback>
         </View>

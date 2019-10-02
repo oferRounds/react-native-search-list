@@ -1,15 +1,12 @@
 import React, { Component } from 'react'
 import {
-  Platform,
   StyleSheet,
-  Text,
   View,
   Animated
 } from 'react-native'
 import PropTypes from 'prop-types'
 import Theme from './Theme'
-
-let statusBarSize = (Platform.OS === 'ios' ? 20 : 0)
+import UText from './UText'
 
 export default class Toolbar extends Component {
   static propTypes = {
@@ -56,13 +53,14 @@ export default class Toolbar extends Component {
     } else {
       return (
         <View style={[styles.titleStyle]}>
-          <Text
+          <UText
+            allowFontScaling={false}
             style={[styles.titleTextStyle, {
               color: textColor
             }]}
             numberOfLines={1}>
             {title}
-          </Text>
+          </UText>
         </View>
       )
     }

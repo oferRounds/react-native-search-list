@@ -8,7 +8,6 @@ import {
   AppRegistry,
   StatusBar,
   StyleSheet,
-  Text,
   View,
   Alert
 } from 'react-native'
@@ -52,7 +51,7 @@ export default class example extends Component {
   renderEmpty () {
     return (
       <View style={styles.emptyDataSource}>
-        <Text style={{color: '#979797', fontSize: 18, paddingTop: 20}}> No Content </Text>
+        <UText style={{color: '#979797', fontSize: 18, paddingTop: 20}}> No Content </UText>
       </View>
     )
   }
@@ -61,9 +60,9 @@ export default class example extends Component {
   renderEmptyResult (searchStr) {
     return (
       <View style={styles.emptySearchResult}>
-        <Text style={{color: '#979797', fontSize: 18, paddingTop: 20}}> No Result For <Text
-          style={{color: '#171a23', fontSize: 18}}>{searchStr}</Text></Text>
-        <Text style={{color: '#979797', fontSize: 18, alignItems: 'center', paddingTop: 10}}>Please search again</Text>
+        <UText style={{color: '#979797', fontSize: 18, paddingTop: 20}}> No Result For <UText
+          style={{color: '#171a23', fontSize: 18}}>{searchStr}</UText></UText>
+        <UText style={{color: '#979797', fontSize: 18, alignItems: 'center', paddingTop: 10}}>Please search again</UText>
       </View>
     )
   }

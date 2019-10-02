@@ -4,7 +4,6 @@
 
 import {
   View,
-  Text,
   StyleSheet,
   ListView,
   PixelRatio,
@@ -15,10 +14,6 @@ import {
 
 import React, { Component } from 'react'
 
-import {
-  sTrim
-} from './utils/utils'
-
 import SearchBar from './components/SearchBar'
 import pinyin from 'js-pinyin'
 import Toolbar from './components/Toolbar'
@@ -28,6 +23,7 @@ import PropTypes from 'prop-types'
 import Theme from './components/Theme'
 import SearchService from './SearchService'
 import HighlightableText from './components/HighlightableText'
+import UText from './components/UText'
 
 export default class SearchList extends Component {
   static propTypes = {
@@ -205,7 +201,7 @@ export default class SearchList extends Component {
             justifyContent: 'center',
             height: this.props.sectionHeaderHeight
           }}>
-            <Text style={styles.sectionTitle}>{sectionID}</Text>
+            <UText style={styles.sectionTitle}>{sectionID}</UText>
           </View>
         </View>
       )
@@ -221,9 +217,9 @@ export default class SearchList extends Component {
    */
   _renderSectionIndexItem (sectionData, sectionID) {
     return (
-      <Text style={{textAlign: 'center', color: this.props.sectionIndexTextColor, fontSize: 12, height: 20, fontFamily: 'GothamMedium'}}>
+      <UText style={{textAlign: 'center', color: this.props.sectionIndexTextColor, fontSize: 12, height: 20, fontFamily: 'GothamMedium'}}>
         {sectionID}
-      </Text>
+      </UText>
     )
   }
 

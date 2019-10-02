@@ -3,11 +3,11 @@
 import React, { Component } from 'react'
 import {
   View,
-  Text,
   StyleSheet,
   Animated
 } from 'react-native'
 import PropTypes from 'prop-types'
+import UText from './UText'
 
 let returnTrue = () => true
 const itemHeight = 20
@@ -61,7 +61,7 @@ export default class SectionIndex extends Component {
           pointerEvents='none'>
           {renderSectionItem ? renderSectionItem(section, title) : <View
             style={styles.item}>
-            <Text style={styles.text}>{title}</Text>
+            <UText style={styles.text}>{title}</UText>
           </View>}
         </View>
       )
